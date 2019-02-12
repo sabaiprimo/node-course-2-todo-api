@@ -93,6 +93,15 @@ UserSchema.statics.findByCredential = function (email, password) {
     });
 };
 
+UserSchema.methods.removeToken = function (token) {
+    var user = this;
+    return user.updateOne({
+        $pull:{
+            tokens: {token}
+        }
+    });
+};
+
 UserSchema.pre('save', function (next) {
     var user = this;
     //not hash hashed
